@@ -42,7 +42,11 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
+    'vue-geolocation-api/nuxt',
   ],
+  geolocation:  {
+    // watch: true,
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
