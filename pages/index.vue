@@ -1,72 +1,52 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        relief8-view
-      </h1>
-      <h2 class="subtitle">
-        Create a website and app that will service “angels” and “survivors” before a hurricane and in the critical 24 hours immediately after.
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+    <img src="~assets/red-bg.svg" alt="red stylish background" class="red-bg" />
+    <div class="centered-elements">
+      <nuxt-link to="/role-choice">
+        <img src="~assets/logo.svg" alt="logo for Smart Relief" class="logo" />
+      </nuxt-link>
+      <h1 class="title">Smart Relief</h1>
+      <p class="subtitle">Smart preparation for empower relief</p>
     </div>
+    <img src="~assets/blue-bg.svg" alt="blue stylish background" class="blue-bg" />
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
-  }
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+  font-size: 46px;
+  color: #232A5E;
 }
 
 .subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+  font-family: Helvetica;
+  font-size: 15px;
+  color: #231F20;
 }
 
-.links {
-  padding-top: 15px;
+.logo {
+  max-width: 200px;
+}
+
+img { max-width: 100%; }
+
+.centered-elements {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

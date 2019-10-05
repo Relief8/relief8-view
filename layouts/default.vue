@@ -5,8 +5,13 @@
 </template>
 
 <style>
+@font-face {
+  font-family: 'Raleway SemiBold';
+  src: url('~static/fonts/raleway-font/Raleway-SemiBold.ttf');
+}
+
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family: 'Raleway SemiBold', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
