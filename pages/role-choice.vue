@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>Choose your role</h1>
+    <nuxt-link to="/SurvForm">
+      <h1>Choose your role</h1>
+    </nuxt-link>
   </div>
 </template>
 
