@@ -52,6 +52,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: "http://relief8.us-east-1.elasticbeanstalk.com/"
   },
   /*
   ** Build configuration
