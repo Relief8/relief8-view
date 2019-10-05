@@ -134,7 +134,8 @@ export default {
         var tooltipHtml = `
           <div class="tooltip">
             <h2 class="tooltipHeading">${resource.name}</h2>
-              <p class="tooltipRole">${resourceType}</p>
+              <p class="tooltipRole">${resourceType}</p>` + 
+              (resource.rating ? `<p>${resource.rating} stars</p>` : '' ) + `
               <br />
               <p class="tooltipAddress">${resource.vicinity}</p>
             </div>`;
