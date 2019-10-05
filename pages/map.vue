@@ -49,7 +49,12 @@
 </template>
 
 <script>
+import { gmapApi } from "vue2-google-maps";
+
 export default {
+  computed: {
+    google: gmapApi
+  },
   mounted() {
     this.$geolocation.getCurrentPosition().then(async result => {
       // Get user current geolocation
@@ -60,6 +65,13 @@ export default {
 
       // Get Google map
       this.map = await this.$refs.map.$mapPromise;
+
+      // add a click event handler to the map object
+      this.google.maps.event.addListener(this.map, "click", (event) => {
+          if (this.lastInfoWindow) {
+            this.lastInfoWindow.close();
+          }
+      });
 
       // Load center of map
       this.map.setCenter(location);
@@ -131,11 +143,13 @@ export default {
       this.clearMarkers();
 
       for (var resource of resources) {
-        var tooltipHtml = `
+        var tooltipHtml =
+          `
           <div class="tooltip">
             <h2 class="tooltipHeading">${resource.name}</h2>
-              <p class="tooltipRole">${resourceType}</p>` + 
-              (resource.rating ? `<p>${resource.rating} stars</p>` : '' ) + `
+              <p class="tooltipRole">${resourceType}</p>` +
+          (resource.rating ? `<p>${resource.rating} stars</p>` : "") +
+          `
               <br />
               <p class="tooltipAddress">${resource.vicinity}</p>
             </div>`;
