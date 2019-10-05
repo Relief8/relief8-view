@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <div class="appbar">
-    </div>
+    <div class="appbar"></div>
     <GmapMap
       ref="map"
       :center="{lat:26.4042366, lng: -80.1206704}"
@@ -16,50 +15,35 @@
       <div class="resource-group">
         <div class="resource">
           <img src="/img/res1.png" />
-          <div class="resource-text">
-            Hurricane Prep Checklist
-          </div>
+          <div class="resource-text">Hurricane Prep Checklist</div>
         </div>
-        <div class="resource">
+        <div class="resource" v-on:click="displayResourceListings($event, 'hospitals')">
           <img src="/img/res2.png" />
-          <div class="resource-text">
-            Medical Facilities
-          </div>
+          <div class="resource-text">Medical Facilities</div>
         </div>
       </div>
 
       <div class="resource-group">
-        <div class="resource">
+        <div class="resource" v-on:click="displayResourceListings($event, 'bloodBanks')">
           <img src="/img/res3.png" />
-          <div class="resource-text">
-            Blood banks
-          </div>
+          <div class="resource-text">Blood banks</div>
         </div>
-        <div class="resource">
+        <div class="resource" v-on:click="displayResourceListings($event, 'shelters')">
           <img src="/img/res4.png" />
-          <div class="resource-text">
-            Shelters
-          </div>
+          <div class="resource-text">Shelters</div>
         </div>
       </div>
-
 
       <div class="resource-group">
-        <div class="resource">
+        <div class="resource" v-on:click="displayResourceListings($event, 'gasStations')">
           <img src="/img/res4.png" />
-          <div class="resource-text">
-            Gas stations
-          </div>
+          <div class="resource-text">Gas stations</div>
         </div>
-        <div class="resource">
+        <div class="resource" v-on:click="displayResourceListings($event, 'pharmacies')">
           <img src="/img/res5.png" />
-          <div class="resource-text">
-            Pharmacies
-          </div>
+          <div class="resource-text">Pharmacies</div>
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -88,49 +72,118 @@ export default {
 
       // Fetch with Axios
       try {
-        const survivors = await this.$axios.$post("/cache", {
+        const result = await this.$axios.$post("/map", {
           latitude: location.lat,
           longitude: location.lng
         });
 
-        this.displaySurvivors(survivors);
+        this.displaySurvivors(result.survivors);
+
+        // Save result for later
+        this.result = result;
       } catch (err) {
         alert(err + "\n\n" + err);
       }
     });
   },
 
+  data: function() {
+    return {
+      result: {},
+      markers: []
+    };
+  },
+
   methods: {
     displayMyself(location) {
-        var marker = new google.maps.Marker({
-          position: location,
-          map: this.map,
-          title: "me"
+      var marker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+        title: "me"
+      });
+    },
+
+    clearMarkers() {
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
+    },
+
+    displayResourceListings(element, resourceType) {
+      // Get resources
+      let resources = this.result[resourceType];
+
+      // Not loaded yet?
+      if (!resources) {
+        return;
+      }
+
+      // Clear previous selected
+      if (this.previouslySelectedResource) {
+        this.previouslySelectedResource.className = "resource";
+      }
+      element.currentTarget.className = "resource selected";
+
+      this.previouslySelectedResource = element.currentTarget;
+
+      // Clear existing tooltips
+      this.clearMarkers();
+
+      for (var resource of resources) {
+        var tooltipHtml = `
+          <div class="tooltip">
+            <h2 class="tooltipHeading">${resource.name}</h2>
+              <p class="tooltipRole">${resourceType}</p>
+              <br />
+              <p class="tooltipAddress">${resource.vicinity}</p>
+            </div>`;
+
+        let infowindow = new google.maps.InfoWindow({
+          content: tooltipHtml,
+          maxWidth: 200
         });
+
+        let marker = new google.maps.Marker({
+          position: resource.location,
+          map: this.map,
+          title: resource.name,
+          icon: "/img/angel.svg"
+        });
+        this.markers.push(marker);
+        marker.addListener("click", () => {
+          if (this.lastInfoWindow) {
+            this.lastInfoWindow.close();
+          }
+
+          infowindow.open(this.map, marker);
+          this.lastInfoWindow = infowindow;
+        });
+      }
     },
 
     displaySurvivors(survivors) {
       for (var survivor of survivors) {
-        var contentString = `
-          <div id="content">
-            <h2 id="firstHeading" class="firstHeading">${survivor.firstName} ${survivor.lastName}</h2>
-              <div id="bodyContent">
-              <p><b>Survivor</b></p>
+        var tooltipHtml = `
+          <div class="tooltip">
+            <h2 class="tooltipHeading">${survivor.firstName} ${
+          survivor.lastName
+        }</h2>
+              <p class="tooltipRole">Survivor</p>
               <br />
-              <p>Age: ${new Date().getFullYear() - survivor.dateOfBirth.year} </p>
-              <p>Address: ${survivor.address} </p>
+              <p class="tooltipAddress">${survivor.address}</p>
+              <br />
+              <p>Age: ${new Date().getFullYear() -
+                survivor.dateOfBirth.year} </p>
               <p>Blood type: ${survivor.bloodType}</p>
-              <br />
-              <p><b>Medical needs:</b> ${survivor.medicalNeeds}</p>
-              </div>
             </div>`;
 
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString,
+        let infowindow = new google.maps.InfoWindow({
+          content: tooltipHtml,
           maxWidth: 200
         });
 
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
           position: {
             lat: survivor.location.coordinates[1],
             lng: survivor.location.coordinates[0]
@@ -139,8 +192,15 @@ export default {
           title: "Angel",
           icon: "/img/angel.svg"
         });
-        marker.addListener("click", function() {
+
+        this.markers.push(marker);
+
+        marker.addListener("click", () => {
+          if (this.lastInfoWindow) {
+            this.lastInfoWindow.close();
+          }
           infowindow.open(this.map, marker);
+          this.lastInfoWindow = infowindow;
         });
       }
     }
@@ -149,11 +209,10 @@ export default {
 </script>
 
 
-<style scoped>
-
+<style>
 @font-face {
-  font-family: 'Raleway SemiBold';
-  src: url('~static/fonts/raleway-font/Raleway-SemiBold.ttf');
+  font-family: "Raleway SemiBold";
+  src: url("~static/fonts/raleway-font/Raleway-SemiBold.ttf");
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -164,7 +223,7 @@ export default {
 }
 
 .appbar {
-  background: #EC2024;
+  background: #ec2024;
   height: 53px;
 }
 
@@ -173,13 +232,39 @@ export default {
   font-size: 20px;
 }
 
+.tooltip {
+  color: #232a5e;
+  font-size: 12px;
+}
+.resource.selected {
+  opacity: 0.5;
+}
+
+.tooltipHeading {
+  font-weight: 500;
+  font-size: 12px;
+}
+.tooltip p {
+  font-size: 12px;
+  margin-top: 5px;
+}
+.tooltip br {
+  height: 5px;
+}
+.tooltipRole {
+  color: #ec2024;
+  font-family: Helvetica Neue;
+  text-transform: capitalize;
+  font-weight: 500;
+  font-family: 12px;
+}
 .resources {
-  background: #F0F0F0;
+  background: #f0f0f0;
   height: 100vh;
 }
 
 .resources h1 {
-  color: #232A5E;
+  color: #232a5e;
   font-size: 27px;
   font-family: Raleway SemiBold;
   padding: 40px;
@@ -196,7 +281,8 @@ export default {
   margin: 0 auto 5px;
 }
 .resource {
-  color: #231F20;
+  cursor: pointer;
+  color: #231f20;
   font-size: 12px;
   width: 49%;
   text-align: center;
@@ -206,7 +292,7 @@ export default {
 
 .resource-text {
   margin: 0 30px;
-  color: #231F20;
+  color: #231f20;
 }
 
 html,
