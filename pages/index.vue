@@ -2,7 +2,7 @@
   <div class="container">
     <img src="~assets/red-bg.svg" alt="red stylish background" class="red-bg" />
     <div class="centered-elements">
-      <nuxt-link to="/role-choice">
+      <nuxt-link to="/role-choice" class="link">
         <img src="~assets/logo.svg" alt="logo for Smart Relief" class="logo" />
       </nuxt-link>
       <h1 class="title">Smart Relief</h1>
@@ -18,6 +18,11 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Raleway SemiBold';
+  src: url('~static/fonts/raleway-font/Raleway-SemiBold.ttf');
+}
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -27,6 +32,7 @@ export default {
 
 .title {
   display: block;
+  font-family: 'Raleway SemiBold';
   font-size: 46px;
   color: #232A5E;
 }
@@ -41,7 +47,9 @@ export default {
   max-width: 200px;
 }
 
-img { max-width: 100%; }
+.link:hover {
+  cursor: pointer;
+}
 
 .centered-elements {
   display: flex;
