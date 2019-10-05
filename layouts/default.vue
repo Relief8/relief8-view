@@ -7,6 +7,9 @@
 <style>
 :root {
   --red: #EC2024;
+  --grey: #F0F0F0;
+  --light-grey: #B1B1B1;
+  --lighter-grey: #DEDEDE;
 }
 
 html {
