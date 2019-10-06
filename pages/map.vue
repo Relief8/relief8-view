@@ -5,7 +5,7 @@
       ref="map"
       :center="{lat:26.4042366, lng: -80.1206704}"
       :zoom="14"
-      :options="{mapTypeControl: false}"
+      :options="{mapTypeControl: false, gestureHandling: 'greedy'}"
       map-type-id="terrain"
       style="width: 100vw; height: 50vh"
     />
@@ -13,10 +13,12 @@
       <h1>Important resources</h1>
 
       <div class="resource-group">
-        <div class="resource">
-          <img src="/img/res1.png" />
-          <div class="resource-text">Hurricane Prep Checklist</div>
-        </div>
+        <nuxt-link to="/hurricane-prep">
+          <div class="resource">
+            <img src="/img/res1.png" />
+            <div class="resource-text">Hurricane Prep Checklist</div>
+          </div>
+        </nuxt-link>
         <div class="resource" v-on:click="displayResourceListings($event, 'hospitals')">
           <img src="/img/res2.png" />
           <div class="resource-text">Medical Facilities</div>
@@ -49,7 +51,12 @@
 </template>
 
 <script>
+import { gmapApi } from "vue2-google-maps";
+ 
 export default {
+  computed: {
+    google: gmapApi
+  },
   mounted() {
     this.$geolocation.getCurrentPosition().then(async result => {
       // Get user current geolocation
@@ -57,9 +64,21 @@ export default {
         lat: result.coords.latitude,
         lng: result.coords.longitude
       };
+      
+      // View unloaded?
+      if (!this.$refs.map) {
+        return;
+      }
 
       // Get Google map
       this.map = await this.$refs.map.$mapPromise;
+
+      // add a click event handler to the map object
+      this.google.maps.event.addListener(this.map, "click", (event) => {
+          if (this.lastInfoWindow) {
+            this.lastInfoWindow.close();
+          }
+      });
 
       // Load center of map
       this.map.setCenter(location);
@@ -116,6 +135,7 @@ export default {
 
       // Not loaded yet?
       if (!resources) {
+        this.$toast.show('Please wait...', {duration: 2000});
         return;
       }
 
@@ -131,11 +151,13 @@ export default {
       this.clearMarkers();
 
       for (var resource of resources) {
-        var tooltipHtml = `
+        var tooltipHtml =
+          `
           <div class="tooltip">
             <h2 class="tooltipHeading">${resource.name}</h2>
-              <p class="tooltipRole">${resourceType}</p>` + 
-              (resource.rating ? `<p>${resource.rating} stars</p>` : '' ) + `
+              <p class="tooltipRole">${resourceType}</p>` +
+          (resource.rating ? `<p>${resource.rating} stars</p>` : "") +
+          `
               <br />
               <p class="tooltipAddress">${resource.vicinity}</p>
             </div>`;
@@ -208,7 +230,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 @font-face {
