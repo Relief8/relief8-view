@@ -176,7 +176,7 @@
       createUser: async function () {
         // Demo mode
         if (!this.firstName) {
-          this.$router.push('/thankyou');
+          this.$router.push('/thank-you');
           return;
         }
 
@@ -214,11 +214,11 @@
         }
 
         try  {
-          const response = await this.$axios.post('/register/survivor', userData);
-          this.$router.push('/thankyou');
+          const response = await this.$axios.post('/register/survivor', userData)
+          if (response.status == 200) this.$router.push('/thank-you')
         }
         catch(err) {
-          alert(err);
+          alert(err)
         }
       },
     },
