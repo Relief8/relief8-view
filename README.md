@@ -21,13 +21,13 @@ $ npm run generate
 
 # Screenshots
 
-![Screenshot](https://raw.github.com/Relief8/relief8-view/master/static/screenshots/1.png)
-![Screenshot](https://raw.github.com/Relief8/relief8-view/master/static/screenshots/2.png)
+![Screenshot](https://raw.github.com/relief8-team/relief8-view/master/static/screenshots/1.png)
+![Screenshot](https://raw.github.com/relief8-team/relief8-view/master/static/screenshots/2.png)
 
-![Screenshot](https://raw.github.com/Relief8/relief8-view/master/static/screenshots/3.png)
-![Screenshot](https://raw.github.com/Relief8/relief8-view/master/static/screenshots/4.png)
+![Screenshot](https://raw.github.com/relief8-team/relief8-view/master/static/screenshots/3.png)
+![Screenshot](https://raw.github.com/relief8-team/relief8-view/master/static/screenshots/4.png)
 
-![Screenshot](https://raw.github.com/Relief8/relief8-view/master/static/screenshots/5.png)
-![Screenshot](https://raw.github.com/Relief8/relief8-view/master/static/screenshots/6.png)
+![Screenshot](https://raw.github.com/relief8-team/relief8-view/master/static/screenshots/5.png)
+![Screenshot](https://raw.github.com/relief8-team/relief8-view/master/static/screenshots/6.png)
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
