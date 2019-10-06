@@ -19,4 +19,15 @@ $ npm run start
 $ npm run generate
 ```
 
+# Screenshots
+
+![Screenshot](https://raw.github.com/relief8/relief8-view/master/assets/screenshots/1.png)
+![Screenshot](https://raw.github.com/relief8/relief8-view/master/assets/screenshots/2.png)
+
+![Screenshot](https://raw.github.com/relief8/relief8-view/master/assets/screenshots/3.png)
+![Screenshot](https://raw.github.com/relief8/relief8-view/master/assets/screenshots/4.png)
+
+![Screenshot](https://raw.github.com/relief8/relief8-view/master/assets/screenshots/5.png)
+![Screenshot](https://raw.github.com/relief8/relief8-view/master/assets/screenshots/6.png)
+
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
