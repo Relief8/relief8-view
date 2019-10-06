@@ -1,35 +1,32 @@
 <template>
   <div class="container">
-
-  <div class="HandHolding?">
-    <img src="~assets/4-people-holdng-hands.png" alt="People hodling hands" />
-  </div>
-  <div class="Midsec">
-  <h1 class="title">Thank You</h1>
-  <h2 class="subtitle">For submitting your data</h2>
-  <h3 class="comment">We will provide help in times of distress</h3>
-     <div class="option angel-option">
-      <img src="~assets/high-five.svg" alt="I want to be a angel icon" />
-      <nuxt-link to="/angel-form" class="btn">CAN YOU HELP TOO?</nuxt-link>
+    <div class="HandHolding?">
+      <img src="~assets/4-people-holdng-hands.png" alt="People hodling hands" />
     </div>
-  </div>
+    <div class="Midsec">
+      <h1 class="title">Thank You</h1>
+      <h2 class="subtitle">For your application</h2>
+      <h3 class="comment">We will be verifying your identity and let you know once you are approved.</h3>
+      <div class="option angel-option">
+        <img src="~assets/high-five.svg" alt="I want to be a angel icon" />
+      </div>
+    </div>
     <div class="footer">
-      <nuxt-link to="/role-choice">
-        <h4>Skip</h4>
+      <nuxt-link to="/map">
+        <h4>-> </h4>
       </nuxt-link>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-  export default {}
+export default {};
 </script>
 
 <style scoped>
-
 @font-face {
-  font-family: 'Raleway SemiBold';
-  src: url('~static/fonts/raleway-font/Raleway-SemiBold.ttf');
+  font-family: "Raleway SemiBold";
+  src: url("~static/fonts/raleway-font/Raleway-SemiBold.ttf");
 }
 
 .container {
@@ -40,28 +37,26 @@
 
 .title {
   display: block;
-  font-family: 'Raleway SemiBold';
+  font-family: "Raleway SemiBold";
   font-size: 49px;
-  color: #EC2024;
+  color: #ec2024;
   text-align: center;
 }
 
-
 .subtitle {
   display: block;
-  font-family: 'Helvetica';
+  font-family: "Helvetica";
   font-size: 17px;
-  color: #232A5E;
+  color: #232a5e;
   text-align: center;
 }
 
 .comment {
   display: block;
-  font-family: 'Helvetica';
+  font-family: "Helvetica";
   font-size: 16px;
   color: #989898;
   text-align: center;
-
 }
 
 .footer {
@@ -108,7 +103,6 @@
   margin-bottom: 10px;
 }
 
-
 .container {
   align-self: flex-end;
 }
@@ -120,5 +114,4 @@ h2 {
 h3 {
   height: 70px;
 }
-
 </style>

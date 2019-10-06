@@ -102,7 +102,10 @@
          <input type="radio" id="yes" value="Yes" v-model="picked">
          <input type="radio" id="no" value="No" v-model="picked"> 
 
-  
+        <nuxt-link to="/thankyou-angel">
+        <button class="btn">JOIN</button>
+        </nuxt-link>
+
    </div> 
   </div>
 </template>
@@ -216,5 +219,17 @@
 .date-of-birth input {
   width: 5.3rem;
   margin: 0;
+}
+
+.btn {
+  background-color: var(--red);
+  color: white;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 25px;
+  margin: 10px 15px;
+  width: 100px;
+  align-self: end;
+  justify-self: end;
 }
 </style>

@@ -174,6 +174,12 @@
         return this.gender == gender
       },
       createUser: async function () {
+        // Demo mode
+        if (!this.firstName) {
+          this.$router.push('/thankyou');
+          return;
+        }
+
         const userData = {
           firstName: this.firstName,
           lastName: this.lastName,
@@ -184,7 +190,7 @@
           },
           email: this.email,
           address: `${this.streetAddress} ${this.city} ${this.state} ${this.zipCode}`,
-          medication: this.medication.split(',').map(med => med.replace(/\s/g, "")),
+          medication: this.medication ? this.medication.split(',').map(med => med.replace(/\s/g, "")) : [],
           petCount: this.petCount,
           specialNeeds: this.specialNeeds,
           bloodType: this.bloodType,
@@ -206,12 +212,14 @@
             }
           ]
         }
-        const response = await this.$axios
-          .post('http://relief8.us-east-1.elasticbeanstalk.com/register/survivor', userData)
-          .catch(error => console.error(error))
-        console.log(response)
-        // if (response.status == 200)
-        //   this.$router.push('/thankyou')
+
+        try  {
+          const response = await this.$axios.post('/register/survivor', userData);
+          this.$router.push('/thankyou');
+        }
+        catch(err) {
+          alert(err);
+        }
       },
     },
     computed: {
