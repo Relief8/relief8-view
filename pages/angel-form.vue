@@ -81,7 +81,7 @@
        
        <div>
          <input type="radio" id="other-medical-professionals" value="Other medical professionals" v-model="picked">
-        <label for="Other medical professionals" class="no-margin">Other medical professionals</label>
+        <label for="Other medical professionals" class="no-margin">Other medical professionals:</label>
        </div>
      
        <div class="medical-text">
@@ -133,10 +133,12 @@
          </label>
          </div>
          
-
-        <nuxt-link to="/thankyou-angel">
-        <button class="btn">JOIN</button> 
-        </nuxt-link>
+         <br>
+         <br>
+        <nuxt-link to="/thankyou-angel" class="btn" @click="createUser()">
+          JOIN
+        </nuxt-link> 
+        <br>
 
    </div> 
   </div>
@@ -228,7 +230,7 @@ input[type="radio"] {
 
 .medical-text {
   height: 130px;
-  margin: 15px;
+  margin: 11px;
   border-radius: 15px;
   background-color: #ffffff;
 }
@@ -273,14 +275,17 @@ input[type="radio"] {
 }
 
 .btn {
-  background-color: var(--red);
-  color: white;
-  font-size: 14px;
-  padding: 12px;
-  margin: 0 auto;
-  border-radius: 25px;
-  width: 100px;
-  align-self: end;
-  justify-self: end;
+background-color: var(--red);
+color: white;
+font-size: 17px;
+text-decoration: none;
+padding: 12px;
+border-radius: 25px;
+margin: 10px 15px;
+width: 150px;
+align-self: center;
+justify-self: center;
+display: grid;
+justify-items: center;
 }
 </style>
