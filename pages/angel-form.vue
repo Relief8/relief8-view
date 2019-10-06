@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-bar">
-      <nuxt-link to="/role-choice">img
+      <nuxt-link to="/role-choice">
         <img src="~assets/left-arrow.svg" alt="back arrow" />
       </nuxt-link>
     </div>
