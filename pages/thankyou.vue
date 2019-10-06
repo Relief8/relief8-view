@@ -1,8 +1,8 @@
 <template>
   <div class="container">
- 
+
   <div class="HandHolding?">
-    <img src="~assets/topimagehandholding.png" alt="People hodling hands" />
+    <img src="~assets/4-people-holdng-hands.png" alt="People hodling hands" />
   </div>
   <div class="Midsec">
   <h1 class="title">Thank You</h1>
@@ -59,7 +59,7 @@
   font-size: 16px;
   color: #989898;
   text-align: center;
-  
+
 }
 
 .footer {
