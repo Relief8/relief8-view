@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <div class="appbar"></div>
+    <div class="appbar">
+      <div class="appbar-title">
+        Angels
+      </div>
+    </div>
     <GmapMap
       ref="map"
       :center="{lat:26.4042366, lng: -80.1206704}"
@@ -64,6 +68,9 @@ export default {
         lat: result.coords.latitude,
         lng: result.coords.longitude
       };
+
+      // Save location
+      this.userLocation = location;
       
       // View unloaded?
       if (!this.$refs.map) {
@@ -183,6 +190,14 @@ export default {
           this.lastInfoWindow = infowindow;
         });
       }
+
+      if (this.userLocation) {
+        // Load center of map
+        this.map.panTo(this.userLocation);
+
+        // Set map zoom
+        this.map.setZoom(11);
+      }
     },
 
     displaySurvivors(survivors) {
@@ -247,6 +262,13 @@ export default {
 .appbar {
   background: #ec2024;
   height: 53px;
+}
+
+.appbar-title {
+  color: #fff;
+  font-size: 21px;
+  text-align: center;
+  padding: 13px 0 0 0;
 }
 
 .title {
