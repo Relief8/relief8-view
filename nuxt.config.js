@@ -1,3 +1,4 @@
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -14,6 +15,12 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
+  },
+  /*
+  ** Environment Variables
+   */
+  env: {
+    googleApiKey: process.env.GOOGLE_API_KEY
   },
   /*
   ** Customize the progress-bar color
@@ -64,5 +71,5 @@ export default {
   */
   build: {
     transpile: [/^vue2-google-maps($|\/)/]
-  }
+  },
 }
