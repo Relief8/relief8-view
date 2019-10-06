@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-bar">
-      <nuxt-link to="/role-choice">
+      <nuxt-link to="/role-choice">img
         <img src="~assets/left-arrow.svg" alt="back arrow" />
       </nuxt-link>
     </div>
@@ -42,6 +42,13 @@
         <input v-model="birthDay">
         <p>/</p>
         <input v-model="birthYear">  
+      </div>
+      <div>
+      <label for="drivers-ID">Driver's ID:</label>
+      <!-- <input id="drivers-ID" v-model="driversID" /> -->
+      <div class="driver-ID">
+           <img style="position:absolute; top:1100px; left:170px; width:50px; height:50px" src="~assets/camera-fade.svg" alt="camera-logo" />
+      </div>
       </div>
 
 <!--      <label for=""-->
@@ -106,6 +113,12 @@
   padding: 12px;
   border-radius: 20px;
   border: none;
+}
+.driver-ID {
+  height: 200px;
+  margin: 15px;
+  border-radius: 15px;
+  background-color: #ffffff;
 }
 
 .form label {
