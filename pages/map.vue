@@ -12,398 +12,397 @@
       style="width: 100vw; height: 50vh"
     />
     <div class="resources">
-      <h1>Important resources</h1>
+      <h1 class="title">Important resources</h1>
 
-      <div class="resource-group">
+      <div class="resource">
         <nuxt-link to="/hurricane-prep">
-          <div class="resource">
-            <img src="/img/res1.png" />
-            <div class="resource-text">Hurricane Prep Checklist</div>
-          </div>
+          <img src="/img/res1.png"/>
         </nuxt-link>
-        <div class="resource" v-on:click="displayResourceListings($event, 'hospitals')">
-          <img src="/img/res2.png" />
-          <div class="resource-text">Medical Facilities</div>
-        </div>
+        <p class="resource-text">Hurricane Prep Checklist</p>
       </div>
-
-      <div class="resource-group">
-        <div class="resource" v-on:click="displayResourceListings($event, 'bloodBanks')">
-          <img src="/img/res3.png" />
-          <div class="resource-text">Blood banks</div>
-        </div>
-        <div class="resource" v-on:click="displayResourceListings($event, 'shelters')">
-          <img src="/img/res4.png" />
-          <div class="resource-text">Shelters</div>
-        </div>
+      <div class="resource" v-on:click="displayResourceListings($event, 'hospitals')">
+        <img src="/img/res2.png"/>
+        <p class="resource-text">Medical Facilities</p>
       </div>
-
-      <div class="resource-group">
-        <div class="resource" v-on:click="displayResourceListings($event, 'gasStations')">
-          <img src="/img/res4.png" />
-          <div class="resource-text">Gas stations</div>
-        </div>
-        <div class="resource" v-on:click="displayResourceListings($event, 'pharmacies')">
-          <img src="/img/res5.png" />
-          <div class="resource-text">Pharmacies</div>
-        </div>
+      <div class="resource" v-on:click="displayResourceListings($event, 'bloodBanks')">
+        <img src="/img/res3.png"/>
+        <p class="resource-text">Blood banks</p>
+      </div>
+      <div class="resource" v-on:click="displayResourceListings($event, 'shelters')">
+        <img src="/img/res4.png"/>
+        <p class="resource-text">Shelters</p>
+      </div>
+      <div class="resource" v-on:click="displayResourceListings($event, 'gasStations')">
+        <img src="/img/res4.png"/>
+        <p class="resource-text">Gas stations</p>
+      </div>
+      <div class="resource" v-on:click="displayResourceListings($event, 'pharmacies')">
+        <img src="/img/res5.png"/>
+        <p class="resource-text">Pharmacies</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { gmapApi } from "vue2-google-maps";
+  import { gmapApi } from 'vue2-google-maps'
 
-export default {
-  computed: {
-    google: gmapApi
-  },
-  mounted() {
-    this.$geolocation.getCurrentPosition().then(async result => {
-      // Get user current geolocation
-      let location = {
-        lat: result.coords.latitude,
-        lng: result.coords.longitude
-      };
-
-      // Save location
-      this.userLocation = location;
-
-      // View unloaded?
-      if (!this.$refs.map) {
-        return;
-      }
-
-      // Get Google map
-      this.map = await this.$refs.map.$mapPromise;
-
-      // add a click event handler to the map object
-      this.google.maps.event.addListener(this.map, "click", event => {
-        if (this.lastInfoWindow) {
-          this.lastInfoWindow.close();
+  export default {
+    computed: {
+      google: gmapApi,
+    },
+    mounted() {
+      this.$geolocation.getCurrentPosition().then(async result => {
+        // Get user current geolocation
+        let location = {
+          lat: result.coords.latitude,
+          lng: result.coords.longitude,
         }
-      });
 
-      // Load center of map
-      this.map.setCenter(location);
+        // Save location
+        this.userLocation = location
 
-      // Set map zoom
-      this.map.setZoom(13);
+        // View unloaded?
+        if (!this.$refs.map) {
+          return
+        }
 
-      // Marker for yourself
-      this.displayMyself(location);
+        // Get Google map
+        this.map = await this.$refs.map.$mapPromise
 
-      // Fetch with Axios
-      try {
-        const result = await this.$axios.$post("/map", {
-          latitude: location.lat,
-          longitude: location.lng
-        });
+        // add a click event handler to the map object
+        this.google.maps.event.addListener(this.map, 'click', event => {
+          if (this.lastInfoWindow) {
+            this.lastInfoWindow.close()
+          }
+        })
 
-        this.displaySurvivors(result.survivors);
+        // Load center of map
+        this.map.setCenter(location)
 
-        // Save result for later
-        this.result = result;
-      } catch (err) {
-        alert(err + "\n\n" + err);
-      }
-    });
-  },
+        // Set map zoom
+        this.map.setZoom(13)
 
-  data: function() {
-    return {
-      result: {},
-      markers: []
-    };
-  },
+        // Marker for yourself
+        this.displayMyself(location)
 
-  methods: {
-    displayMyself(location) {
-      var marker = new google.maps.Marker({
-        position: location,
-        map: this.map,
-        title: "me"
-      });
+        // Fetch with Axios
+        try {
+          const result = await this.$axios.$post('/map', {
+            latitude: location.lat,
+            longitude: location.lng,
+          })
+
+          this.displaySurvivors(result.survivors)
+
+          // Save result for later
+          this.result = result
+        } catch (err) {
+          alert(err + '\n\n' + err)
+        }
+      })
     },
 
-    clearMarkers() {
-      for (var i = 0; i < this.markers.length; i++) {
-        this.markers[i].setMap(null);
+    data: function () {
+      return {
+        result: {},
+        markers: [],
       }
-      this.markers = [];
     },
 
-    displayResourceListings(element, resourceType) {
-      // Get resources
-      let resources = this.result[resourceType];
+    methods: {
+      displayMyself(location) {
+        var marker = new google.maps.Marker({
+          position: location,
+          map: this.map,
+          title: 'me',
+        })
+      },
 
-      // Not loaded yet?
-      if (!resources) {
-        this.$toast.show("Please wait...", { duration: 2000 });
-        return;
-      }
+      clearMarkers() {
+        for (var i = 0; i < this.markers.length; i++) {
+          this.markers[i].setMap(null)
+        }
+        this.markers = []
+      },
 
-      // Clear previous selected
-      if (this.previouslySelectedResource) {
-        this.previouslySelectedResource.className = "resource";
-      }
-      element.currentTarget.className = "resource selected";
+      displayResourceListings(element, resourceType) {
+        // Get resources
+        let resources = this.result[resourceType]
 
-      this.previouslySelectedResource = element.currentTarget;
+        // Not loaded yet?
+        if (!resources) {
+          this.$toast.show('Please wait...', {duration: 2000})
+          return
+        }
 
-      // Clear existing tooltips
-      this.clearMarkers();
+        // Clear previous selected
+        if (this.previouslySelectedResource) {
+          this.previouslySelectedResource.className = 'resource'
+        }
+        element.currentTarget.className = 'resource selected'
 
-      for (var resource of resources) {
-        var distanceFromMe = this.calcDistanceMiles(
-          this.userLocation.lat,
-          this.userLocation.lng,
-          resource.location.lat,
-          resource.location.lng
-        );
+        this.previouslySelectedResource = element.currentTarget
 
-        var tooltipHtml =
-          `
+        // Clear existing tooltips
+        this.clearMarkers()
+
+        for (var resource of resources) {
+          var distanceFromMe = this.calcDistanceMiles(
+            this.userLocation.lat,
+            this.userLocation.lng,
+            resource.location.lat,
+            resource.location.lng,
+          )
+
+          var tooltipHtml =
+            `
           <div class="tooltip">
             <h2 class="tooltipHeading">${resource.name}</h2>
               <p class="tooltipRole">${resourceType}</p>` +
-          (resource.rating ? `<p>${resource.rating} stars</p>` : "") +
-          `
+            (resource.rating ? `<p>${resource.rating} stars</p>` : '') +
+            `
               <br />
               <p class="tooltipAddress">${resource.vicinity}</p>
               <br />
               <p class="tooltipDistance">${Math.round(distanceFromMe * 100) /
-                100} miles away</p>
-            </div>`;
+            100} miles away</p>
+            </div>`
 
-        let infowindow = new google.maps.InfoWindow({
-          content: tooltipHtml,
-          maxWidth: 200
-        });
+          let infowindow = new google.maps.InfoWindow({
+            content: tooltipHtml,
+            maxWidth: 200,
+          })
 
-        let marker = new google.maps.Marker({
-          position: resource.location,
-          map: this.map,
-          title: resource.name,
-          icon: `/img/${resourceType}-icon.svg`
-        });
-        this.markers.push(marker);
-        marker.addListener("click", () => {
-          if (this.lastInfoWindow) {
-            this.lastInfoWindow.close();
-          }
+          let marker = new google.maps.Marker({
+            position: resource.location,
+            map: this.map,
+            title: resource.name,
+            icon: `/img/${resourceType}-icon.svg`,
+          })
+          this.markers.push(marker)
+          marker.addListener('click', () => {
+            if (this.lastInfoWindow) {
+              this.lastInfoWindow.close()
+            }
 
-          infowindow.open(this.map, marker);
-          this.lastInfoWindow = infowindow;
-        });
-      }
+            infowindow.open(this.map, marker)
+            this.lastInfoWindow = infowindow
+          })
+        }
 
-      if (this.userLocation) {
-        // Load center of map
-        this.map.panTo(this.userLocation);
+        if (this.userLocation) {
+          // Load center of map
+          this.map.panTo(this.userLocation)
 
-        // Set map zoom
-        this.map.setZoom(11);
-      }
-    },
+          // Set map zoom
+          this.map.setZoom(11)
+        }
+      },
 
-    calcDistanceMiles(lat1, lon1, lat2, lon2) {
-      var R = 6371; // km
-      var dLat = this.toRad(lat2 - lat1);
-      var dLon = this.toRad(lon2 - lon1);
-      var lat1 = this.toRad(lat1);
-      var lat2 = this.toRad(lat2);
+      calcDistanceMiles(lat1, lon1, lat2, lon2) {
+        var R = 6371 // km
+        var dLat = this.toRad(lat2 - lat1)
+        var dLon = this.toRad(lon2 - lon1)
+        var lat1 = this.toRad(lat1)
+        var lat2 = this.toRad(lat2)
 
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) *
+        var a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) *
           Math.sin(dLon / 2) *
           Math.cos(lat1) *
-          Math.cos(lat2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c;
-      // Convert to miles
-      return d * 0.621371;
-    },
+          Math.cos(lat2)
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        var d = R * c
+        // Convert to miles
+        return d * 0.621371
+      },
 
-    // Converts numeric degrees to radians
-    toRad(Value) {
-      return (Value * Math.PI) / 180;
-    },
+      // Converts numeric degrees to radians
+      toRad(Value) {
+        return (Value * Math.PI) / 180
+      },
 
-    displaySurvivors(survivors) {
-      for (var survivor of survivors) {
-        var location = {
-          lat: survivor.location.coordinates[1],
-          lng: survivor.location.coordinates[0]
-        };
+      displaySurvivors(survivors) {
+        for (var survivor of survivors) {
+          var location = {
+            lat: survivor.location.coordinates[1],
+            lng: survivor.location.coordinates[0],
+          }
 
-        var distanceFromMe = this.calcDistanceMiles(
-          this.userLocation.lat,
-          this.userLocation.lng,
-          location.lat,
-          location.lng
-        );
+          var distanceFromMe = this.calcDistanceMiles(
+            this.userLocation.lat,
+            this.userLocation.lng,
+            location.lat,
+            location.lng,
+          )
 
-        var tooltipHtml =
-          `
+          var tooltipHtml =
+            `
           <div class="tooltip">
             <h2 class="tooltipHeading">${survivor.firstName} ${
-            survivor.lastName
-          }</h2>
+              survivor.lastName
+            }</h2>
               <p class="tooltipRole">Survivor</p>
               <br />
               <p class="tooltipAddress">${survivor.address}</p>
               <br />
               <p>Age: ${new Date().getFullYear() -
-                survivor.dateOfBirth.year} </p>
+            survivor.dateOfBirth.year} </p>
               <p>Blood type: ${survivor.bloodType}</p>
               <br />
               <a href="tel:` +
-          survivor.phoneNumber +
-          `" class="call-button">CALL</a>
+            survivor.phoneNumber +
+            `" class="call-button">CALL</a>
               <p class="tooltipDistance">${Math.round(distanceFromMe * 100) /
-                100} miles away</p>
-            </div>`;
+            100} miles away</p>
+            </div>`
 
-        let infowindow = new google.maps.InfoWindow({
-          content: tooltipHtml,
-          maxWidth: 200
-        });
+          let infowindow = new google.maps.InfoWindow({
+            content: tooltipHtml,
+            maxWidth: 200,
+          })
 
-        let marker = new google.maps.Marker({
-          position: location,
-          map: this.map,
-          title: "Angel",
-          icon: "/img/angel.svg"
-        });
+          let marker = new google.maps.Marker({
+            position: location,
+            map: this.map,
+            title: 'Angel',
+            icon: '/img/angel.svg',
+          })
 
-        this.markers.push(marker);
+          this.markers.push(marker)
 
-        marker.addListener("click", () => {
-          if (this.lastInfoWindow) {
-            this.lastInfoWindow.close();
-          }
-          infowindow.open(this.map, marker);
-          this.lastInfoWindow = infowindow;
-        });
-      }
-    }
+          marker.addListener('click', () => {
+            if (this.lastInfoWindow) {
+              this.lastInfoWindow.close()
+            }
+            infowindow.open(this.map, marker)
+            this.lastInfoWindow = infowindow
+          })
+        }
+      },
+    },
   }
-};
 </script>
 
 <style>
-@font-face {
-  font-family: "Raleway SemiBold";
-  src: url("~static/fonts/raleway-font/Raleway-SemiBold.ttf");
-}
+  @font-face {
+    font-family: "Raleway SemiBold";
+    src: url("~static/fonts/raleway-font/Raleway-SemiBold.ttf");
+  }
 
-/* Always set the map height explicitly to define the size of the div
-* element that contains the map. */
+  /* Always set the map height explicitly to define the size of the div
+  * element that contains the map. */
 
-#map {
-  height: 100%;
-}
+  #map {
+    height: 100%;
+  }
 
-.appbar {
-  background: #ec2024;
-  height: 53px;
-}
+  .appbar {
+    background: #ec2024;
+    height: 53px;
+  }
 
-.appbar-title {
-  color: #fff;
-  font-size: 21px;
-  text-align: center;
-  padding: 13px 0 0 0;
-}
+  .appbar-title {
+    color: #fff;
+    font-size: 21px;
+    text-align: center;
+    padding: 13px 0 0 0;
+  }
 
-.title {
-  color: #fff;
-  font-size: 20px;
-}
+  .title {
+    color: #fff;
+    font-size: 20px;
+  }
 
-.tooltip {
-  color: #232a5e;
-  font-size: 12px;
-}
-.resource.selected {
-  opacity: 0.5;
-}
+  .tooltip {
+    color: #232a5e;
+    font-size: 12px;
+  }
 
-.tooltipHeading {
-  font-weight: 500;
-  font-size: 12px;
-}
-.call-button {
-  color: #ec2024;
-  float: right;
-  display: block;
-  margin-top: 5px;
-  text-decoration: none;
-  font-weight: 500;
-}
+  .resource.selected {
+    opacity: 0.5;
+  }
 
-.tooltip p {
-  font-size: 12px;
-  margin-top: 5px;
-}
-.tooltip br {
-  height: 5px;
-}
-.tooltipRole {
-  color: #ec2024;
-  font-family: Helvetica Neue;
-  text-transform: capitalize;
-  font-weight: 500;
-  font-family: 12px;
-}
-.resources {
-  background: #f0f0f0;
-  height: 100vh;
-}
+  .tooltipHeading {
+    font-weight: 500;
+    font-size: 12px;
+  }
 
-.resources h1 {
-  color: #232a5e;
-  font-size: 27px;
-  font-family: Raleway SemiBold;
-  padding: 40px;
-  text-align: center;
-}
-/* Optional: Makes the sample page fill the window. */
+  .call-button {
+    color: #ec2024;
+    float: right;
+    display: block;
+    margin-top: 5px;
+    text-decoration: none;
+    font-weight: 500;
+  }
 
-.resource-group {
-  margin: 0 0 30px 0;
-}
+  .tooltip p {
+    font-size: 12px;
+    margin-top: 5px;
+  }
 
-.resource img {
-  display: block;
-  margin: 0 auto 5px;
-}
-.resource {
-  cursor: pointer;
-  color: #231f20;
-  font-size: 12px;
-  width: 49%;
-  text-align: center;
-  margin: 0 auto;
-  display: inline-block;
-}
+  .tooltip br {
+    height: 5px;
+  }
 
-.tooltipDistance {
-  font-weight: bold;
-}
+  .tooltipRole {
+    color: #ec2024;
+    font-family: Helvetica Neue;
+    text-transform: capitalize;
+    font-weight: 500;
+    font-family: 12px;
+  }
 
-.resource-text {
-  margin: 0 30px;
-  color: #231f20;
-}
+  .resources {
+    background: #f0f0f0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px 0;
+    padding: 0 15px;
+  }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  .title {
+    grid-column: 1 / -1;
+  }
+
+  .resources h1 {
+    color: #232a5e;
+    font-size: 27px;
+    font-family: 'Raleway SemiBold';
+    padding: 40px 0 5px;
+    text-align: center;
+  }
+
+  /* Optional: Makes the sample page fill the window. */
+
+  .resource-group {
+    margin: 0 0 30px 0;
+  }
+
+  .resource {
+    cursor: pointer;
+    color: #231f20;
+    font-size: 12px;
+    display: grid;
+    justify-items: center;
+  }
+
+  .tooltipDistance {
+    font-weight: bold;
+  }
+
+  .resource-text {
+    color: #231f20;
+    text-align: center;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 </style>
