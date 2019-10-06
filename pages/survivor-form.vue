@@ -4,6 +4,9 @@
       <nuxt-link to="/role-choice">
         <img src="~assets/left-arrow.svg" alt="back arrow" />
       </nuxt-link>
+
+    <div class="appbar-title">Tell us about yourself</div>  
+    
     </div>
     <div class="form">
       <div class="section-title">
@@ -176,7 +179,7 @@
       createUser: async function () {
         // Demo mode
         if (!this.firstName) {
-          this.$router.push('/thankyou');
+          this.$router.push('/thank-you');
           return;
         }
 
@@ -214,11 +217,11 @@
         }
 
         try  {
-          const response = await this.$axios.post('/register/survivor', userData);
-          this.$router.push('/thankyou');
+          const response = await this.$axios.post('/register/survivor', userData)
+          if (response.status == 200) this.$router.push('/thank-you')
         }
         catch(err) {
-          alert(err);
+          alert(err)
         }
       },
     },
@@ -242,11 +245,6 @@
 .top-bar {
   background: var(--red);
   padding: 10px 30px;
-}
-
-.top-bar a {
-  display: flex;
-  align-content: center;
 }
 
 .form {
@@ -366,4 +364,16 @@ p.field-info {
   align-self: end;
   justify-self: end;
 }
+
+.appbar-title {
+  color: #fff;
+  font-size: 21px;
+  margin: 13px 0 0 30px;
+}
+
+.top-bar img {
+  cursor: pointer;
+  float: left;
+}
+
 </style>
