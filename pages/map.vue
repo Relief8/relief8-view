@@ -171,7 +171,7 @@ export default {
           position: resource.location,
           map: this.map,
           title: resource.name,
-          icon: "/img/angel.svg"
+          icon: `/img/${resourceType}-icon.svg`
         });
         this.markers.push(marker);
         marker.addListener("click", () => {
