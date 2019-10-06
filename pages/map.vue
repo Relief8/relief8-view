@@ -5,7 +5,7 @@
       ref="map"
       :center="{lat:26.4042366, lng: -80.1206704}"
       :zoom="14"
-      :options="{mapTypeControl: false}"
+      :options="{mapTypeControl: false, gestureHandling: 'greedy'}"
       map-type-id="terrain"
       style="width: 100vw; height: 50vh"
     />
@@ -52,7 +52,7 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
-
+ 
 export default {
   computed: {
     google: gmapApi
@@ -135,6 +135,7 @@ export default {
 
       // Not loaded yet?
       if (!resources) {
+        this.$toast.show('Please wait...', {duration: 2000});
         return;
       }
 
