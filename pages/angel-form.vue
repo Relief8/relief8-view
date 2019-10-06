@@ -46,7 +46,7 @@
       <div>
         <label>Driver's ID:</label>
         <div class="driver-ID">
-          <img style="position:absolute; top:1100px; left:170px; width:50px; height:50px" src="~assets/camera-fade.svg" alt="camera-logo"/>
+          <img src="~assets/camera-fade.svg" alt="camera-logo"/>
         </div>
       </div>
       <div class="section-title">
