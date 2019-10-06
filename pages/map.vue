@@ -13,10 +13,12 @@
       <h1>Important resources</h1>
 
       <div class="resource-group">
-        <div class="resource">
-          <img src="/img/res1.png" />
-          <div class="resource-text">Hurricane Prep Checklist</div>
-        </div>
+        <nuxt-link to="/hurricane-prep">
+          <div class="resource">
+            <img src="/img/res1.png" />
+            <div class="resource-text">Hurricane Prep Checklist</div>
+          </div>
+        </nuxt-link>
         <div class="resource" v-on:click="displayResourceListings($event, 'hospitals')">
           <img src="/img/res2.png" />
           <div class="resource-text">Medical Facilities</div>
@@ -62,6 +64,11 @@ export default {
         lat: result.coords.latitude,
         lng: result.coords.longitude
       };
+      
+      // View unloaded?
+      if (!this.$refs.map) {
+        return;
+      }
 
       // Get Google map
       this.map = await this.$refs.map.$mapPromise;
@@ -222,7 +229,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 @font-face {
