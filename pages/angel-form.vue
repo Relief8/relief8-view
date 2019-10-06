@@ -69,7 +69,7 @@
       <label for="Other medical professionals">Other medical professionals</label>
       <textarea v-model="message" placeholder="add multiple lines"></textarea>
      
-      <!-- <div class="section-title">
+      <div class="section-title">
          <img src="~assets/hold-hands.svg" alt="Ways to help" />
          <h4>Ways to help</h4>
       </div>
@@ -93,8 +93,8 @@
 
           <div class="resource-group">
              <div class="resource" v-on:click="displayResourceListings($event, 'Truck')">
-                 <!-- <img src="/img/res4.png" /> -->
-                 <!-- <div class="resource-text">Truck</div>
+                 <!-- <img src="/img/res4.png" />-->
+                 <div class="resource-text">Truck</div>
              </div>
              <div class="resource" v-on:click="displayResourceListings($event, 'Other')">
                   <div class="resource-text">Other</div>
@@ -103,7 +103,7 @@
           <label for="Do you have a Shelter/space for people to come and share?">A Doctor</label>
 
          <input type="radio" id="yes" value="Yes" v-model="picked">
-         <input type="radio" id="no" value="No" v-model="picked"> --> -->
+         <input type="radio" id="no" value="No" v-model="picked"> 
 
   
    </div> 
