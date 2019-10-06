@@ -42,8 +42,13 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
+    '@nuxtjs/toast',
     'vue-geolocation-api/nuxt',
   ],
+  toast: {
+      position: 'top-center',
+      register: []
+  },
   geolocation:  {
     // watch: true,
   },
