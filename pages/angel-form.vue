@@ -67,18 +67,15 @@
       <label for="Labor Skills">Labor Skills</label>
       <input type="radio" id="other-medical-professionals" value="Other medical professionals" v-model="picked">
       <label for="Other medical professionals">Other medical professionals</label>
-      <textarea v-model="message" placeholder="add multiple lines"></textarea>
+      <div class="medical-text">
+           
+      </div>
      
       <div class="section-title">
          <img src="~assets/hold-hands.svg" alt="Ways to help" />
          <h4>Ways to help</h4>
       </div>
-
-      <label for="Do you have a transportation to provide to survival?">A Doctor</label>
-         <input type="radio" id="yes" value="Yes" v-model="picked">
-         <input type="radio" id="no" value="No" v-model="picked">
-
-
+      <p>Do you have a transportation to provide to survival?</p>
          <div class="resource-group">
              <div class="resource" v-on:click="displayResourceListings($event, 'Car')">
                  <img src="~assets/car-boat.svg" />
@@ -93,7 +90,7 @@
 
           <div class="resource-group">
              <div class="resource" v-on:click="displayResourceListings($event, 'Truck')">
-                 <!-- <img src="/img/res4.png" />-->
+                 <img src="~assets/truck.svg" />
                  <div class="resource-text">Truck</div>
              </div>
              <div class="resource" v-on:click="displayResourceListings($event, 'Other')">
@@ -170,6 +167,13 @@
 }
 .driver-ID {
   height: 200px;
+  margin: 15px;
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+.medical-text {
+  height: 130px;
   margin: 15px;
   border-radius: 15px;
   background-color: #ffffff;
