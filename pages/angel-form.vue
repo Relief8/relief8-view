@@ -119,8 +119,23 @@
          <input type="radio" id="yes" value="Yes" v-model="picked">
          <input type="radio" id="no" value="No" v-model="picked"> 
 -->
+
+
+        <label>Do you have a Shelter/space for people to come and share?</label>
+         <div class="radio-button">
+         <label for="has-shelter" :class="{ 'active-radio-btn': hasShelter }">
+         <input type="radio" id="has-shelter" value="true" v-model="hasShelter">
+         <span>Yes</span>
+         </label>
+         <label for="female" :class="{ 'active-radio-btn': !hasShelter }">
+         <input type="radio" id="no-shelter" value="false" v-model="hasShelter">
+         <span>No</span>
+         </label>
+         </div>
+         
+
         <nuxt-link to="/thankyou-angel">
-        <button class="btn">JOIN</button>
+        <button class="btn">JOIN</button> 
         </nuxt-link>
 
    </div> 
@@ -262,8 +277,8 @@ input[type="radio"] {
   color: white;
   font-size: 14px;
   padding: 12px;
+  margin: 0 auto;
   border-radius: 25px;
-  margin: 10px 15px;
   width: 100px;
   align-self: end;
   justify-self: end;
