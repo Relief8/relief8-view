@@ -282,6 +282,30 @@
     margin: 0;
   }
 
+
+.radio-button {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+}
+.radio-button label {
+ float: left;
+ background-color: white;
+ display: grid;
+ padding: 12px;
+ border-radius: 20px;
+ font-size: 16px;
+ color: var(--lighter-grey);
+}
+.radio-button label span {
+ text-align: center;
+}
+.radio-button input {
+ display: none;
+}
+.radio-button label.active-radio-btn {
+ background-color: var(--red);
+ color: white;
+}
   .btn {
     background-color: var(--red);
     color: white;
