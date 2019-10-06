@@ -44,8 +44,62 @@
         <input v-model="birthYear">  
       </div>
 
-<!--      <label for=""-->
-    </div>
+
+     <div class="section-title">
+        <img src="~assets/red-cross.svg" alt="verification icon" />
+        <h4>Medical Professionals</h4>
+      </div>
+
+      <input type="radio" id="a-doctor" value="A Doctor" v-model="picked">
+      <label for="A Doctor">A Doctor</label>
+      <input type="radio" id="a-nurse" value="A Nurse" v-model="picked">
+      <label for="A Nurse">A Nurse</label>
+      <input type="radio" id="a-mental-health-professional" value="A Mental health professional" v-model="picked">
+      <label for="A Mental health professional">A Mental health professional</label>
+      <input type="radio" id="labor-skills" value="Labor Skills" v-model="picked">
+      <label for="Labor Skills">Labor Skills</label>
+      <input type="radio" id="other-medical-professionals" value="Other medical professionals" v-model="picked">
+      <label for="Other medical professionals">Other medical professionals</label>
+      <textarea v-model="message" placeholder="add multiple lines"></textarea>
+     
+      <div class="section-title">
+         <img src="~assets/hold-hands.svg" alt="Ways to help" />
+         <h4>Ways to help</h4>
+      </div>
+
+      <label for="Do you have a transportation to provide to survival?">A Doctor</label>
+         <input type="radio" id="yes" value="Yes" v-model="picked">
+         <input type="radio" id="no" value="No" v-model="picked">
+
+
+         <div class="resource-group">
+             <div class="resource" v-on:click="displayResourceListings($event, 'Car')">
+                 <img src="~assets/car-boat.svg" />
+                 <div class="resource-text">Car </div>
+             </div>
+             <div class="resource" v-on:click="displayResourceListings($event, 'Boat')">
+                 <img src="~assets/boat-fade.svg" />
+                 <div class="resource-text">Boat</div>
+             </div>
+          </div>
+          
+
+          <div class="resource-group">
+             <div class="resource" v-on:click="displayResourceListings($event, 'Truck')">
+                 <!-- <img src="/img/res4.png" /> -->
+                 <div class="resource-text">Truck</div>
+             </div>
+             <div class="resource" v-on:click="displayResourceListings($event, 'Other')">
+                  <div class="resource-text">Other</div>
+             </div>
+          </div>
+          <label for="Do you have a Shelter/space for people to come and share?">A Doctor</label>
+
+         <input type="radio" id="yes" value="Yes" v-model="picked">
+         <input type="radio" id="no" value="No" v-model="picked">
+
+  
+   </div> 
   </div>
 </template>
 
