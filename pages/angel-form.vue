@@ -232,6 +232,9 @@
     margin: 15px;
     border-radius: 15px;
     background-color: #ffffff;
+    display: grid;
+    align-items: center;
+    justify-items: center;
   }
 
   .medical-text {
