@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="footer">
-      <nuxt-link to="/map">
+      <nuxt-link to="/role-choice">
         <h4>Skip</h4>
       </nuxt-link>
     </div>
