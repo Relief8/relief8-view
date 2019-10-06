@@ -5,8 +5,8 @@
       <nuxt-link to="/role-choice" class="link">
         <img src="~assets/logo.svg" alt="logo for Smart Relief" class="logo" />
       </nuxt-link>
-      <h1 class="title">Smart Relief</h1>
-      <p class="subtitle">Smart preparation for empower relief</p>
+      <h1 class="title">RELIEF <font color="#E60019">8</font></h1> 
+      <p class="subtitle">Locate &amp Help</p>
     </div>
     <img src="~assets/blue-bg.svg" alt="blue stylish background" class="blue-bg" />
   </div>
@@ -18,6 +18,11 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Raleway Medium';
+  src: url('~static/fonts/raleway-font/Raleway-Medium.ttf');
+}
+
 @font-face {
   font-family: 'Raleway SemiBold';
   src: url('~static/fonts/raleway-font/Raleway-SemiBold.ttf');
@@ -33,14 +38,15 @@ export default {
 .title {
   display: block;
   font-family: 'Raleway SemiBold';
-  font-size: 46px;
+  font-size: 61px;
   color: #232A5E;
 }
 
+
 .subtitle {
-  font-family: Helvetica;
-  font-size: 15px;
-  color: #231F20;
+  font-family: 'Raleway Medium';
+  font-size: 22px;
+  color: #6D6F72
 }
 
 .logo {

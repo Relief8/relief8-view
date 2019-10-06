@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="appbar">
-      <div class="appbar-title">Angels</div>
+      <div class="appbar-title">Survivors in Need of Relief</div>
     </div>
     <GmapMap
       ref="map"
