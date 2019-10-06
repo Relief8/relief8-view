@@ -1,9 +1,7 @@
 <template>
   <div class="container">
     <div class="appbar">
-      <div class="appbar-title">
-        Angels
-      </div>
+      <div class="appbar-title">Angels</div>
     </div>
     <GmapMap
       ref="map"
@@ -56,7 +54,7 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
- 
+
 export default {
   computed: {
     google: gmapApi
@@ -71,7 +69,7 @@ export default {
 
       // Save location
       this.userLocation = location;
-      
+
       // View unloaded?
       if (!this.$refs.map) {
         return;
@@ -81,10 +79,10 @@ export default {
       this.map = await this.$refs.map.$mapPromise;
 
       // add a click event handler to the map object
-      this.google.maps.event.addListener(this.map, "click", (event) => {
-          if (this.lastInfoWindow) {
-            this.lastInfoWindow.close();
-          }
+      this.google.maps.event.addListener(this.map, "click", event => {
+        if (this.lastInfoWindow) {
+          this.lastInfoWindow.close();
+        }
       });
 
       // Load center of map
@@ -142,7 +140,7 @@ export default {
 
       // Not loaded yet?
       if (!resources) {
-        this.$toast.show('Please wait...', {duration: 2000});
+        this.$toast.show("Please wait...", { duration: 2000 });
         return;
       }
 
@@ -158,6 +156,13 @@ export default {
       this.clearMarkers();
 
       for (var resource of resources) {
+        var distanceFromMe = this.calcDistanceMiles(
+          this.userLocation.lat,
+          this.userLocation.lng,
+          resource.location.lat,
+          resource.location.lng
+        );
+
         var tooltipHtml =
           `
           <div class="tooltip">
@@ -167,6 +172,9 @@ export default {
           `
               <br />
               <p class="tooltipAddress">${resource.vicinity}</p>
+              <br />
+              <p class="tooltipDistance">${Math.round(distanceFromMe * 100) /
+                100} miles away</p>
             </div>`;
 
         let infowindow = new google.maps.InfoWindow({
@@ -200,13 +208,50 @@ export default {
       }
     },
 
+    calcDistanceMiles(lat1, lon1, lat2, lon2) {
+      var R = 6371; // km
+      var dLat = this.toRad(lat2 - lat1);
+      var dLon = this.toRad(lon2 - lon1);
+      var lat1 = this.toRad(lat1);
+      var lat2 = this.toRad(lat2);
+
+      var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) *
+          Math.sin(dLon / 2) *
+          Math.cos(lat1) *
+          Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c;
+      // Convert to miles
+      return d * 0.621371;
+    },
+
+    // Converts numeric degrees to radians
+    toRad(Value) {
+      return (Value * Math.PI) / 180;
+    },
+
     displaySurvivors(survivors) {
       for (var survivor of survivors) {
-        var tooltipHtml = `
+        var location = {
+          lat: survivor.location.coordinates[1],
+          lng: survivor.location.coordinates[0]
+        };
+
+        var distanceFromMe = this.calcDistanceMiles(
+          this.userLocation.lat,
+          this.userLocation.lng,
+          location.lat,
+          location.lng
+        );
+
+        var tooltipHtml =
+          `
           <div class="tooltip">
             <h2 class="tooltipHeading">${survivor.firstName} ${
-          survivor.lastName
-        }</h2>
+            survivor.lastName
+          }</h2>
               <p class="tooltipRole">Survivor</p>
               <br />
               <p class="tooltipAddress">${survivor.address}</p>
@@ -214,6 +259,12 @@ export default {
               <p>Age: ${new Date().getFullYear() -
                 survivor.dateOfBirth.year} </p>
               <p>Blood type: ${survivor.bloodType}</p>
+              <br />
+              <a href="tel:` +
+          survivor.phoneNumber +
+          `" class="call-button">CALL</a>
+              <p class="tooltipDistance">${Math.round(distanceFromMe * 100) /
+                100} miles away</p>
             </div>`;
 
         let infowindow = new google.maps.InfoWindow({
@@ -222,10 +273,7 @@ export default {
         });
 
         let marker = new google.maps.Marker({
-          position: {
-            lat: survivor.location.coordinates[1],
-            lng: survivor.location.coordinates[0]
-          },
+          position: location,
           map: this.map,
           title: "Angel",
           icon: "/img/angel.svg"
@@ -288,6 +336,15 @@ export default {
   font-weight: 500;
   font-size: 12px;
 }
+.call-button {
+  color: #ec2024;
+  float: right;
+  display: block;
+  margin-top: 5px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
 .tooltip p {
   font-size: 12px;
   margin-top: 5px;
@@ -332,6 +389,10 @@ export default {
   text-align: center;
   margin: 0 auto;
   display: inline-block;
+}
+
+.tooltipDistance {
+  font-weight: bold;
 }
 
 .resource-text {
