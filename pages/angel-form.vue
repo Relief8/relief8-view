@@ -57,29 +57,46 @@
         <h4>Medical Professionals</h4>
       </div>
 
-      <input type="radio" id="a-doctor" value="A Doctor" v-model="picked">
-      <label for="A Doctor">A Doctor</label>
-      <input type="radio" id="a-nurse" value="A Nurse" v-model="picked">
-      <label for="A Nurse">A Nurse</label>
-      <input type="radio" id="a-mental-health-professional" value="A Mental health professional" v-model="picked">
-      <label for="A Mental health professional">A Mental health professional</label>
-      <input type="radio" id="labor-skills" value="Labor Skills" v-model="picked">
-      <label for="Labor Skills">Labor Skills</label>
-      <input type="radio" id="other-medical-professionals" value="Other medical professionals" v-model="picked">
-      <label for="Other medical professionals">Other medical professionals</label>
-      <div class="medical-text">
+
+
+
+      <div>
+       <input type="radio" id="a-doctor" value="A Doctor" v-model="picked">
+       <label for="A Doctor" class="no-margin">A Doctor</label>
+      </div>
+
+       <div>
+        <input type="radio" id="a-nurse" value="A Nurse" v-model="picked">
+        <label for="A Nurse" class="no-margin">A Nurse</label>
+       </div>
+      <div>
+       <input type="radio" id="a-mental-health-professional" value="A Mental health professional" v-model="picked">
+       <label for="A Mental health professional" class="no-margin">A Mental health professional</label>
+      </div>
+
+       <div>
+        <input type="radio" id="labor-skills" value="Labor Skills" v-model="picked">
+        <label for="Labor Skills" class="no-margin">Labor Skills</label>
+       </div>
+       
+       <div>
+         <input type="radio" id="other-medical-professionals" value="Other medical professionals" v-model="picked">
+        <label for="Other medical professionals" class="no-margin">Other medical professionals</label>
+       </div>
+     
+       <div class="medical-text">
            
       </div>
-     
+<!--      
       <div class="section-title">
          <img src="~assets/hold-hands.svg" alt="Ways to help" />
          <h4>Ways to help</h4>
       </div>
       <p>Do you have a transportation to provide to survival?</p>
-         <div class="resource-group">
-             <div class="resource" v-on:click="displayResourceListings($event, 'Car')">
+         <div class="transport-group">
+             <div class="transport" v-on:click="selectTransport($event, 'Car')">
                  <img src="~assets/car-boat.svg" />
-                 <div class="resource-text">Car </div>
+                 <div class="transport-text">Car </div>
              </div>
              <div class="resource" v-on:click="displayResourceListings($event, 'Boat')">
                  <img src="~assets/boat-fade.svg" />
@@ -102,8 +119,8 @@
          <input type="radio" id="yes" value="Yes" v-model="picked">
          <input type="radio" id="no" value="No" v-model="picked"> 
 
-  
-   </div> 
+  -->
+   </div>  
   </div>
 </template>
 
@@ -137,6 +154,25 @@
   min-height: 100vh;
 }
 
+input[type="radio"] {
+  margin: 0;
+  display: inline-block;
+}
+
+.transport {
+  background: #fff;
+  max-width: 70px;
+  padding: 10px 20px;
+  border-radius: 15px;
+}
+
+.transport img {
+
+}
+
+.form label.no-margin {
+  margin: 0;
+}
 .top-bar {
   background: var(--red);
   padding: 10px 30px;
@@ -217,4 +253,9 @@
   width: 5.3rem;
   margin: 0;
 }
+
+  .md-radio {
+    display: flex;
+  }
+
 </style>
