@@ -5,8 +5,8 @@
         <img src="~assets/left-arrow.svg" alt="back arrow" />
       </nuxt-link>
 
-    <div class="appbar-title">Tell us about yourself</div>  
-    
+    <div class="appbar-title">Tell us about yourself</div>
+
     </div>
     <div class="form">
       <div class="section-title">
@@ -245,6 +245,10 @@
 .top-bar {
   background: var(--red);
   padding: 10px 30px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  grid-gap: 40px;
 }
 
 .form {
@@ -368,7 +372,6 @@ p.field-info {
 .appbar-title {
   color: #fff;
   font-size: 21px;
-  margin: 13px 0 0 30px;
 }
 
 .top-bar img {
