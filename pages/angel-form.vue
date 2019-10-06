@@ -138,9 +138,12 @@
           <span>No</span>
         </label>
       </div>
+      <br>
+      <br>
       <nuxt-link to="/thankyou-angel" class="btn" @click="createUser()">
         JOIN
       </nuxt-link>
+      <br>
     </div>
   </div>
 </template>
@@ -189,10 +192,6 @@
     max-width: 70px;
     padding: 10px 20px;
     border-radius: 15px;
-  }
-
-  .transport img {
-
   }
 
   .form label.no-margin {
